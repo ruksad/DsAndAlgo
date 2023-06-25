@@ -1,9 +1,12 @@
 package com.lean.scaryCoders.logical.arrays;
 
-import java.util.HashSet;
+import java.io.IOError;
+import java.lang.annotation.Target;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ArraysUtils {
+public class ArrayUtils {
 
     public static boolean checkIfArraysHasElementInCommon(int [] array1,int[] array2){
         long millis=System.currentTimeMillis();
@@ -32,8 +35,20 @@ public class ArraysUtils {
                 break;
             }
         }
-        System.out.println("Time taken for execution in bruteforce= "+(System.currentTimeMillis()-currentTime));
+        System.out.println("Time taken for execution in non bruteforce= "+(System.currentTimeMillis()-currentTime));
         return contains;
+    }
+
+
+
+    public static boolean checkIfArraysHasElementInCommon2(int [] arrayOne,int [] arrayTwo){
+        if(Objects.isNull(arrayOne) || Objects.isNull(arrayTwo))
+            return false;
+        long timeStart= System.currentTimeMillis();
+        Optional<Integer> integer = Arrays.stream(arrayOne).boxed().collect(Collectors.toList()).stream().filter(element -> Arrays.stream(arrayTwo).boxed().collect(Collectors.toList()).contains(element)).findFirst();
+
+        System.out.println("Time taken for execution in javas build in stream= "+ (System.currentTimeMillis()-timeStart));
+        return integer.isPresent();
     }
 
     public static void main(String s[]){
@@ -41,6 +56,6 @@ public class ArraysUtils {
         int[] arrays2= IntStream.range(1000,10000).toArray();
         System.out.println(checkIfArraysHasElementInCommon(arrays1,arrays2));
         System.out.println(checkIfArraysHasElementInCommon1(arrays1,arrays2));
-
+        System.out.println(checkIfArraysHasElementInCommon2(arrays1,arrays2));
     }
 }

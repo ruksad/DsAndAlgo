@@ -10,6 +10,9 @@ public class StringUtils {
      * @return
      */
     public static int lengthOfLongestSubstring(String s){
+        if(Objects.isNull(s))
+            return 0;
+
         int start=0,end=0,maxLength=0;
         Set set=new HashSet<Character>();
 
@@ -24,6 +27,7 @@ public class StringUtils {
         }
         return maxLength;
     }
+
     public static void main(String []s){
         System.out.println(lengthOfLongestSubstring("abcdkgfbcbb"));
         System.out.println(lengthOfLongestSubstring("bbab"));

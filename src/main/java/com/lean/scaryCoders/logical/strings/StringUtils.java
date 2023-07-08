@@ -9,7 +9,7 @@ public class StringUtils {
      * @param s
      * @return
      */
-    public static int lengthOfLongestSubstring(String s){
+    public static int lengthOfLongestSubstringWithNonRepOfChars(String s){
         if(Objects.isNull(s))
             return 0;
 
@@ -29,8 +29,8 @@ public class StringUtils {
     }
 
     public static void main(String []s){
-        System.out.println(lengthOfLongestSubstring("abcdkgfbcbb"));
-        System.out.println(lengthOfLongestSubstring("bbab"));
-        System.out.println(lengthOfLongestSubstring("bbabc"));
+        System.out.println(lengthOfLongestSubstringWithNonRepOfChars("abcdkgfbcbb"));
+        //System.out.println(lengthOfLongestSubstringWithNonRepOfChars("bbab"));
+        //System.out.println(lengthOfLongestSubstringWithNonRepOfChars("bbabc"));
     }
 }

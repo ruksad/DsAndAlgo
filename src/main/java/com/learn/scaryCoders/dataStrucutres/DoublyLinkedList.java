@@ -118,7 +118,15 @@ public class DoublyLinkedList<T> {
     }
 
     public T elementAtTail(){
+        if(tail==null)
+            return null;
         return tail.data;
+    }
+
+    public T elementAtHead(){
+        if(head==null)
+            return null;
+        return head.data;
     }
 
     public boolean isEmpty() {

@@ -1,4 +1,4 @@
-package com.lean.scaryCoders.logical.numbers;
+package com.learn.scaryCoders.logical.numbers;
 
 import java.util.HashMap;
 

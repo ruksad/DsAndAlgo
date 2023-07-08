@@ -1,4 +1,4 @@
-package com.lean.scaryCoders.logical.strings;
+package com.learn.scaryCoders.logical.strings;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.lean.scaryCoders.logical.arrays;
+package com.learn.scaryCoders.logical.arrays;
 
 import java.util.*;
 import java.util.stream.Collectors;

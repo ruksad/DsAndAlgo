@@ -93,14 +93,23 @@ public class DoublyLinkedList<T> {
 
         while (temp != null) {
             if (count == index) {
-
+                /**
+                 * delete at between
+                 */
                 if (temp.prev != null && temp.next != null) {
                     temp.prev.next = temp.next;
                     temp.next.prev = temp.prev;
                 } else {
+                    /**
+                     * delete at beginning
+                     */
                     if (temp.prev == null) {
                         head = temp.next;
-                        head.prev = null;
+                        /**
+                         * delete at beginning but one node
+                         */
+                        if(head!=null)
+                            head.prev = null;
                     } else {
                         tail = temp.prev;
                         tail.next = null;
@@ -127,6 +136,22 @@ public class DoublyLinkedList<T> {
         if(head==null)
             return null;
         return head.data;
+    }
+
+    public T elementAt(int index){
+        if(index > length-1 || index<0){
+            throw new IllegalArgumentException("index range is out of bounds");
+        }
+        int count=0;
+        Node<T> temp= head;
+        while(temp!=null){
+            if(count==index){
+                return temp.data;
+            }
+            count++;
+            temp=temp.next;
+        }
+        return null;
     }
 
     public boolean isEmpty() {

@@ -24,9 +24,9 @@ public class QueueUsingStack<T> {
          * reversing the insertion order in stack, here we are making push expensive by maintaining a duplicate stack, same way pop method can be made expensive
          * to implement another way of implementing the queue using stack
          */
-        copy(originalStack, duplicateStack);
+        move(originalStack, duplicateStack);
         originalStack.push(data);
-        copy(duplicateStack, originalStack);
+        move(duplicateStack, originalStack);
         return true;
     }
 
@@ -39,7 +39,7 @@ public class QueueUsingStack<T> {
         return originalStack.peek();
     }
 
-    private Stack<T> copy(Stack<T> from, Stack<T> to) {
+    private Stack<T> move(Stack<T> from, Stack<T> to) {
         while (!from.isEmpty()) {
             to.push(from.pop());
         }

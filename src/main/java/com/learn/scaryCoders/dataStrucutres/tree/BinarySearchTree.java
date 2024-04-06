@@ -1,8 +1,6 @@
 package com.learn.scaryCoders.dataStrucutres.tree;
 
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,17 +24,17 @@ public class BinarySearchTree {
 
         while (true) {
             if (data < temp.data) {
-                if(temp.left==null){
-                    temp.left= new Node(data,null,null);
+                if (temp.left == null) {
+                    temp.left = new Node(data, null, null);
                     return temp.left;
                 }
-                temp=temp.left;
-            }else{
-                if(temp.right==null){
-                    temp.right= new Node(data,null,null);
+                temp = temp.left;
+            } else {
+                if (temp.right == null) {
+                    temp.right = new Node(data, null, null);
                     return temp.right;
                 }
-                temp=temp.right;
+                temp = temp.right;
             }
         }
     }
@@ -53,58 +51,98 @@ public class BinarySearchTree {
         }
     }
 
-    private int findMin(){
-        Node temp= root;
-        while(temp.left!=null){
-            temp=temp.left;
+    private int findMin() {
+        Node temp = root;
+        while (temp.left != null) {
+            temp = temp.left;
         }
         return temp.data;
     }
 
-    private void inOrderTraversal(Node root, LinkedList<Integer> list){
-        if(root !=null){
-            inOrderTraversal(root.left,list);
+    private int findMaximum(){
+        Node temp= root;
+        while(temp.right!=null){
+            temp=temp.right;
+        }
+        return temp.data;
+    }
+
+    private void inOrderTraversal(Node root, LinkedList<Integer> list) {
+        if (root != null) {
+            inOrderTraversal(root.left, list);
             list.add(root.data);
-            inOrderTraversal(root.right,list);
+            inOrderTraversal(root.right, list);
         }
     }
 
-    private void preOrderTraversal(Node root, LinkedList<Integer> list){
-        if(root!=null){
+    private void preOrderTraversal(Node root, LinkedList<Integer> list) {
+        if (root != null) {
             list.add(root.data);
-            preOrderTraversal(root.left,list);
-            preOrderTraversal(root.right,list);
+            preOrderTraversal(root.left, list);
+            preOrderTraversal(root.right, list);
         }
     }
 
-    private void postOrderTraversal(Node root, LinkedList<Integer> list){
-        if(root!=null){
+    private void postOrderTraversal(Node root, LinkedList<Integer> list) {
+        if (root != null) {
             postOrderTraversal(root.left, list);
-            postOrderTraversal(root.right,list);
+            postOrderTraversal(root.right, list);
             list.add(root.data);
         }
     }
+
+    private int height(Node node) {
+        if (node == null)
+            return 0;
+        else {
+            int lDepth = height(node.left);
+            int rDepth = height(node.right);
+
+            if (lDepth > rDepth)
+                return lDepth + 1;
+            else
+                return rDepth + 1;
+        }
+    }
+
+    private void fetchNodesAtGivenLevel(Node node, int level, List<Integer> ints){
+        if(root==null)
+            return ;
+        else if(level==1){
+            ints.add(node.data);
+        }else if(level >1) {
+            fetchNodesAtGivenLevel(node.left,level-1,ints);
+            fetchNodesAtGivenLevel(node.right,level-1,ints);
+        }
+    }
+
     public static void main(String[] args) {
 
-        BinarySearchTree bst= new BinarySearchTree();
-        bst.insert(40);
+        BinarySearchTree bst = new BinarySearchTree();
+
         bst.insert(50);
-        bst.insert(20);
         bst.insert(30);
-        bst.insert(25);
-        bst.insert(45);
-        bst.insert(46);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
         System.out.println(bst.findMin());
         LinkedList<Integer> inOrder = new LinkedList<>();
         bst.inOrderTraversal(bst.root, inOrder);
-        System.out.println("Inorder= "+inOrder);
+        System.out.println("Inorder= " + inOrder);
 
         LinkedList<Integer> preOrder = new LinkedList<>();
         bst.preOrderTraversal(bst.root, preOrder);
-        System.out.println("Preorder= "+preOrder);
+        System.out.println("Preorder= " + preOrder);
 
         LinkedList<Integer> postOrder = new LinkedList<>();
         bst.postOrderTraversal(bst.root, postOrder);
-        System.out.println("PostOrder= "+postOrder);
+        System.out.println("PostOrder= " + postOrder);
+
+        System.out.println("BST height= " + bst.height(bst.root));
+        List<Integer> ints = new ArrayList<>();
+        bst.fetchNodesAtGivenLevel(bst.root,3,ints);
+        System.out.println("Print nodes at level"+ ints);
     }
 }

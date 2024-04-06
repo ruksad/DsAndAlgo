@@ -30,14 +30,14 @@ def addNode(linked_list, data):
      
 
 def printLinkedList(linked_list):
-     if(isEmpty(linked_list)):
+     if isEmpty(linked_list):
           print("Empty linked list")
     
      temp=linked_list.head
-     while(temp.next!=None):
+     while temp.next!=None:
           print(temp.data, end=",")
           temp=temp.next
-
+     print(temp.data)
     
     
 def isEmpty(linked_list):
@@ -47,10 +47,10 @@ if __name__=="__main__":
      linked_list= LinkedList()
 
      addNode(linked_list, str("Ruksad"))
-     addNode(linked_list,str("Ruksad1"))
+     addNode(linked_list, str("Ruksad1"))
+     addNode(linked_list, str("Siddiqui11"))
      addNode(linked_list, str("Siddiqui"))
-     addNode(linked_list, str("Siddiqui"))
-     addNode(linked_list, str("Mohammad"))
+     addNode(linked_list, str("Mohammad1"))
      printLinkedList(linked_list)
 
 

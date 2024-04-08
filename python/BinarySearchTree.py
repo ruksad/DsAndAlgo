@@ -1,5 +1,5 @@
 # https://www.geeksforgeeks.org/introduction-to-binary-search-tree-data-structure-and-algorithm-tutorials/
-
+# BST can be used to implement the graph
 class Node:
     def __init__(self, data):
         self.data = data

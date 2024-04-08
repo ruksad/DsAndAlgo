@@ -117,6 +117,11 @@ class BinarySearchTree:
         else:
             return right_height
 
+    def count_number_of_nodes(self,root):
+        if root is None:
+            return 0
+        return self.count_number_of_nodes(root.left)+ self.count_number_of_nodes(root.right)+1
+
     def print_all_lead_node(self, root, list):
         if root is not None:
 
@@ -155,6 +160,23 @@ class BinarySearchTree:
             for i in range(1, height + 1):
                 self.print_all_nodes_at_level(root, i, list)
 
+    def isBST(self, node):
+        if node is None:
+            return True
+        
+        if node.left is not None and find_max(node.left).data > node.data:
+            return False
+        
+        if node.right is not None and find_min(node.right).data < node.data:
+            return False
+        
+        if self.isBST(node.left) is False or self.isBST(node.right) is False:
+            return False
+        
+        return True
+
+
+
 
 if __name__ == "__main__":
     bst = BinarySearchTree()
@@ -179,6 +201,11 @@ if __name__ == "__main__":
     elements2 = []
     bst.print_all_nodes_level_wise(bst.root,elements2)
     print("all elements level wise {}".format(elements2))
+
+    print("no of nodes in bst: {}".format(bst.count_number_of_nodes(bst.root)))
+
+    bst.root.data=200
+    print("Chekc if BST {}".format(bst.isBST(bst.root)))
     # bst.delete(bst.root, 50)
     # elemets1 = []
     # bst.inorder_traversal(bst.root, elemets1)
@@ -200,3 +227,5 @@ if __name__ == "__main__":
     list2 = []
     bst1.print_all_non_leaf_node(bst1.root, list2)
     print("print all non leaf nodes {}".format(list2))
+
+    print("Chekc if BST {}".format(bst1.isBST(bst1.root)))

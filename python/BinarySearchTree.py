@@ -7,19 +7,35 @@ class Node:
         self.right = None
 
 
+def find_min(root):
+    if root is not None:
+        temp = root
+        while temp.left is not None:
+            temp = temp.left
+        return temp
+
+
+def find_max(root):
+    if root is not None:
+        temp = root
+        while temp.right is not None:
+            temp = temp.right
+        return temp
+
+
 class BinarySearchTree:
 
     def __init__(self):
         self.root = None
 
-    def minValueNode(root):
-        temp = root
-        if temp is not None and temp.left is not None:
-            temp = temp.left
+    # def min_value_node(root):
+    #     temp = root
+    #     if temp is not None and temp.left is not None:
+    #         temp = temp.left
+    #
+    #     return temp
 
-        return temp
-
-    def addNode(self,key):
+    def add_node(self, key):
         if self.root is None:
             self.root = Node(key)
             return self.root
@@ -41,46 +57,33 @@ class BinarySearchTree:
                     return self.root
                 temp = temp.right
 
-    def inOrderTraversal(self, root, list):
+    def inorder_traversal(self, root, list):
         if root is not None:
-            self.inOrderTraversal(root.left, list)
+            self.inorder_traversal(root.left, list)
             list.append(root.data)
-            self.inOrderTraversal(root.right, list)
-        
-    def preOrderTraversal(self,root,list):
-        if root is not None:
-            list.append(root.data)
-            self.preOrderTraversal(self,root.left,list)
-            self.preOrderTraversal(self,root.right,list)
-    
-    def postOrderTraversal(self,root,list):
-        if root is not None:
-            self.postOrderTraversal(self,root,list)
-            self.postOrderTraversal(self,root,list)
+            self.inorder_traversal(root.right, list)
 
-    def find_min(self):
-        if self.root is not None:
-            temp=self.root
-            while(temp.left is not None):
-                temp =temp.left
-            return temp
-        
-    def find_max(self):
-        if self.root is not None:
-            temp=self.root
-            while temp.right is not None:
-                temp=temp.right
-            return temp
+    def preorder_traversal(self, root, list):
+        if root is not None:
+            list.append(root.data)
+            self.preorder_traversal(self, root.left, list)
+            self.preorder_traversal(self, root.right, list)
+
+    def postorder_traversal(self, root, list):
+        if root is not None:
+            self.postorder_traversal(self, root, list)
+            self.postorder_traversal(self, root, list)
+            list.append(root.data)
 
     def delete(self, root, key):
 
-        if root == None:
+        if root is None:
             return
 
         if key < root.data:
-            root.left = self.delete(self, root.left, key)
+            root.left = self.delete(root.left, key)
         elif key > root.data:
-            root.right = self.delete(self, root.right, key)
+            root.right = self.delete(root.right, key)
         else:
 
             # root has no left child
@@ -95,26 +98,31 @@ class BinarySearchTree:
 
             # root has both the children 
 
-            minNode = self.minValueNode(root.right)
+            minNode = find_min(root.right)
             root.data = minNode.data
 
-            root.right = self.delete(self, root.right, minNode.data)
+            root.right = self.delete(root.right, minNode.data)
 
         return root
 
 
 if __name__ == "__main__":
     bst = BinarySearchTree()
-    bst.addNode(50)
-    bst.addNode(30)
-    bst.addNode(20)
-    bst.addNode(40)
-    bst.addNode(70)
-    bst.addNode(60)
-    bst.addNode(80)
+    bst.add_node(50)
+    bst.add_node(30)
+    bst.add_node(20)
+    bst.add_node(40)
+    bst.add_node(70)
+    bst.add_node(60)
+    bst.add_node(80)
 
-    setele = []
-    bst.inOrderTraversal(bst.root, setele)
-    print("InOder traversal {}".format(setele))
-    print("maximum of bst {}".format(bst.find_max().data))
-    print("Minimum of bst {}".format(bst.find_min().data))
+    elemets = []
+    bst.inorder_traversal(bst.root, elemets)
+    print("InOder traversal {}".format(elemets))
+    print("maximum of bst {}".format(find_max(bst.root).data))
+    print("Minimum of bst {}".format(find_min(bst.root).data))
+
+    bst.delete(bst.root, 50)
+    elemets1 = []
+    bst.inorder_traversal(bst.root, elemets1)
+    print("InOrder traversal {}".format(elemets1))

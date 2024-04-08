@@ -128,23 +128,32 @@ class BinarySearchTree:
 
             if root.right is not None:
                 self.print_all_lead_node(root.right, list)
-    
-    def print_all_non_leaf_node(self,root,list):
+
+    def print_all_non_leaf_node(self, root, list):
         if root is not None:
 
             if root.left is None and root.right is None:
                 return
-            
+
             list.append(root.data)
-            self.print_all_non_leaf_node(root.left,list)
-            self.print_all_non_leaf_node(root.right,list)
+            self.print_all_non_leaf_node(root.left, list)
+            self.print_all_non_leaf_node(root.right, list)
 
-
-    def print_all_nodes_at_level(self,root,level):
+    def print_all_nodes_at_level(self, root, level, list):
         if root is not None:
-            height= self.find_height(root)
-            pass
 
+            if level == 1:
+                list.append(root.data)
+            else:
+                self.print_all_nodes_at_level(root.left, level - 1, list)
+                self.print_all_nodes_at_level(root.right, level - 1, list)
+
+    def print_all_nodes_level_wise(self, root, list):
+        if root is not None:
+            height = self.find_height(root)
+
+            for i in range(1, height + 1):
+                self.print_all_nodes_at_level(root, i, list)
 
 
 if __name__ == "__main__":
@@ -163,6 +172,13 @@ if __name__ == "__main__":
     print("maximum of bst {}".format(find_max(bst.root).data))
     print("Minimum of bst {}".format(find_min(bst.root).data))
 
+    elements1 = []
+    bst.print_all_nodes_at_level(bst.root, 3, elements1)
+    print("all elements at given level {}".format(elements1))
+
+    elements2 = []
+    bst.print_all_nodes_level_wise(bst.root,elements2)
+    print("all elements level wise {}".format(elements2))
     # bst.delete(bst.root, 50)
     # elemets1 = []
     # bst.inorder_traversal(bst.root, elemets1)

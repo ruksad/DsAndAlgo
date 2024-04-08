@@ -98,12 +98,53 @@ class BinarySearchTree:
 
             # root has both the children 
 
-            minNode = find_min(root.right)
-            root.data = minNode.data
+            min_node = find_min(root.right)
+            root.data = min_node.data
 
-            root.right = self.delete(root.right, minNode.data)
+            root.right = self.delete(root.right, min_node.data)
 
         return root
+
+    def find_height(self, root):
+        if root is None:
+            return 0
+
+        left_height = self.find_height(root.left) + 1
+        right_height = self.find_height(root.right) + 1
+
+        if left_height > right_height:
+            return left_height
+        else:
+            return right_height
+
+    def print_all_lead_node(self, root, list):
+        if root is not None:
+
+            if root.left is None and root.right is None:
+                list.append(root.data)
+
+            if root.left is not None:
+                self.print_all_lead_node(root.left, list)
+
+            if root.right is not None:
+                self.print_all_lead_node(root.right, list)
+    
+    def print_all_non_leaf_node(self,root,list):
+        if root is not None:
+
+            if root.left is None and root.right is None:
+                return
+            
+            list.append(root.data)
+            self.print_all_non_leaf_node(root.left,list)
+            self.print_all_non_leaf_node(root.right,list)
+
+
+    def print_all_nodes_at_level(self,root,level):
+        if root is not None:
+            height= self.find_height(root)
+            pass
+
 
 
 if __name__ == "__main__":
@@ -122,7 +163,24 @@ if __name__ == "__main__":
     print("maximum of bst {}".format(find_max(bst.root).data))
     print("Minimum of bst {}".format(find_min(bst.root).data))
 
-    bst.delete(bst.root, 50)
-    elemets1 = []
-    bst.inorder_traversal(bst.root, elemets1)
-    print("InOrder traversal {}".format(elemets1))
+    # bst.delete(bst.root, 50)
+    # elemets1 = []
+    # bst.inorder_traversal(bst.root, elemets1)
+    # print("InOrder traversal {}".format(elemets1))
+
+    bst1 = BinarySearchTree()
+    bst1.add_node(1)
+    bst1.add_node(2)
+    bst1.add_node(3)
+    bst1.add_node(4)
+    bst1.add_node(5)
+    bst1.add_node(6)
+    bst1.add_node(7)
+    print(bst.find_height(bst.root))
+    list1 = []
+    bst.print_all_lead_node(bst.root, list1)
+    print("print all leaf nodes {}".format(list1))
+
+    list2 = []
+    bst1.print_all_non_leaf_node(bst1.root, list2)
+    print("print all non leaf nodes {}".format(list2))

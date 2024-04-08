@@ -41,11 +41,36 @@ class BinarySearchTree:
                     return self.root
                 temp = temp.right
 
-    def fetchInOrderList(self, root, list):
+    def inOrderTraversal(self, root, list):
         if root is not None:
-            self.fetchInOrderList(root.left, list)
+            self.inOrderTraversal(root.left, list)
             list.append(root.data)
-            self.fetchInOrderList(root.right, list)
+            self.inOrderTraversal(root.right, list)
+        
+    def preOrderTraversal(self,root,list):
+        if root is not None:
+            list.append(root.data)
+            self.preOrderTraversal(self,root.left,list)
+            self.preOrderTraversal(self,root.right,list)
+    
+    def postOrderTraversal(self,root,list):
+        if root is not None:
+            self.postOrderTraversal(self,root,list)
+            self.postOrderTraversal(self,root,list)
+
+    def find_min(self):
+        if self.root is not None:
+            temp=self.root
+            while(temp.left is not None):
+                temp =temp.left
+            return temp
+        
+    def find_max(self):
+        if self.root is not None:
+            temp=self.root
+            while temp.right is not None:
+                temp=temp.right
+            return temp
 
     def delete(self, root, key):
 
@@ -89,5 +114,7 @@ if __name__ == "__main__":
     bst.addNode(80)
 
     setele = []
-    bst.fetchInOrderList(bst.root, setele)
+    bst.inOrderTraversal(bst.root, setele)
     print("InOder traversal {}".format(setele))
+    print("maximum of bst {}".format(bst.find_max().data))
+    print("Minimum of bst {}".format(bst.find_min().data))

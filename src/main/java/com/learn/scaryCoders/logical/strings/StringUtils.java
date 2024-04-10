@@ -32,52 +32,54 @@ public class StringUtils {
      * Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".The testcases will be generated such that the answer is unique.
      */
 
-    public static String minWindow(String s, String t) {
-        int[] hash = new int[256];
-        int[] curr = new int[256];
+    public static String minWindow(String mainString, String subStringToFind) {
+        int[] freqOfCharToBeFound = new int[256];
+        int[] freqCalc = new int[256];
 
-        if (s.isEmpty() && t.isEmpty()) return "";
-        if (t.length() > s.length()) return "";
+        if (mainString.isEmpty() && subStringToFind.isEmpty()) return "";
+        if (subStringToFind.length() > mainString.length()) return "";
+
         int start = -1, end = -1, min = Integer.MAX_VALUE;
-        for (int i = 0, l = t.length(); i < l; i++) {
-            hash[t.charAt(i)]++;
+
+        for (int i = 0, l = subStringToFind.length(); i < l; i++) {
+            freqOfCharToBeFound[subStringToFind.charAt(i)]++;
         }
 
-        for (int i = 0, l = t.length() - 1; i < l; i++) {
-            curr[s.charAt(i)]++;
+        for (int i = 0, l = subStringToFind.length() - 1; i < l; i++) {
+            freqCalc[mainString.charAt(i)]++;
         }
 
-        for (int i = 0, j = t.length() - 1, l = s.length(); j < l; ) {
-            curr[s.charAt(j)]++;
-            if (isMatch(curr,hash)) {
-                if (j - i < min) {
-                    min = j - i;
-                    start = i;
-                    end = j;
+        for (int leftPtr = 0, rightPtr = subStringToFind.length() - 1, l = mainString.length(); rightPtr < l; ) {
+            freqCalc[mainString.charAt(rightPtr)]++;
+            if (isMatch(freqCalc,freqOfCharToBeFound)) {
+                if (rightPtr - leftPtr < min) {
+                    min = rightPtr - leftPtr;
+                    start = leftPtr;
+                    end = rightPtr;
                 }
-                while (j > i) {
-                    curr[s.charAt(i)]--;
-                    i++;
-                    if (isMatch(curr, hash)) {
-                        if (j - i < min) {
-                            min = j - i;
-                            start = i;
-                            end = j;
+                while (rightPtr > leftPtr) {
+                    freqCalc[mainString.charAt(leftPtr)]--;
+                    leftPtr++;
+                    if (isMatch(freqCalc, freqOfCharToBeFound)) {
+                        if (rightPtr - leftPtr < min) {
+                            min = rightPtr - leftPtr;
+                            start = leftPtr;
+                            end = rightPtr;
                         }
                     } else break;
                 }
             }
-            j++;
+            rightPtr++;
         }
         if (min == Integer.MAX_VALUE) {
             return "";
         }
-        return s.substring(start, end + 1);
+        return mainString.substring(start, end + 1);
     }
 
-    private static boolean isMatch(int[] curr, int[] hash) {
+    private static boolean isMatch(int[] curr, int[] freqOfCharToBeFound) {
         for (int i = 0; i < 256; i++) {
-            if (curr[i] < hash[i]) {
+            if (curr[i] < freqOfCharToBeFound[i]) {
                 return false;
             }
         }
@@ -89,7 +91,79 @@ public class StringUtils {
         //System.out.println(lengthOfLongestSubstringWithNonRepOfChars("bbab"));
         //System.out.println(lengthOfLongestSubstringWithNonRepOfChars("bbabc"));
 
-        String s1 = minWindow("ADOBECODEBANC", "ABC");
+        String s1 = minimumWindowSubstring1("ADOBECODEBANC", "EABC");
         System.out.println(s1);
+    }
+
+
+
+
+
+    public static String minimumWindowSubstring1(String toBeSearched, String toSearch){
+
+        int toBeSearchedArr[]=new int[256];
+        int toSearchArr[]=new int[256];
+
+        int i=0;
+        while(i<toSearch.length()){
+            toSearchArr[toSearch.charAt(i)]++;
+            i++;
+        }
+
+         i=0;
+        while(i<toSearch.length()-1 && i< toBeSearched.length()){
+            toBeSearchedArr[toBeSearched.charAt(i)]++;
+            i++;
+        }
+
+        int  start=0, end=0, min= Integer.MAX_VALUE;
+        for(int leftPtr=0,rightPtr=toSearch.length()-1;  rightPtr<toBeSearched.length();){
+
+            // Expand the window
+            toBeSearchedArr[toBeSearched.charAt(rightPtr)]++;
+
+            if(isMatch1(toBeSearchedArr,toSearchArr)){
+
+                if(rightPtr-leftPtr < min){
+                    min= rightPtr-leftPtr;
+                    start= leftPtr;
+                    end= rightPtr;
+                }
+
+                while(leftPtr < rightPtr){
+
+                    // shrink the window
+                    toBeSearchedArr[toBeSearched.charAt(leftPtr)]--;
+                    leftPtr ++;
+                    if(isMatch1(toBeSearchedArr,toSearchArr)){
+                        if(rightPtr-leftPtr < min){
+                            min= rightPtr- leftPtr;
+                            start= leftPtr;
+                            end= rightPtr;
+                        }
+                    }else break;
+
+
+                }
+            }
+
+            rightPtr++;
+        }
+
+        if (min==Integer.MAX_VALUE)
+            return " ";
+
+
+        return toBeSearched.substring(start,end+1);
+
+
+    }
+
+    private static boolean isMatch1(int [] toBeSearched, int [] toSearch){
+        for(int i=0;i<256;i++){
+            if(toBeSearched[i] < toSearch[i])
+                return false;
+        }
+        return true;
     }
 }

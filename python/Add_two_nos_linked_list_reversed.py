@@ -29,10 +29,10 @@ class TowLLAdd:
 
             curr.next=ListNode()
             curr=curr.next
-            curr.val=sum%10
-            carry= sum/10
+            curr.val=int(sum%10)
+            carry= int(sum/10)
 
-            ll1=ll1.next if ll1 else None
+            ll1= ll1.next if ll1 else None
             ll2= ll2.next if ll2 else None
         
         return listNode.next
@@ -60,7 +60,6 @@ if __name__== "__main__":
     add= TowLLAdd()
     reverse = add.addTwoLLNumberinReverse(node1, node4)
     add.printLL(reverse)
-    #print("add ll {}".format(reverse))
 
 
 

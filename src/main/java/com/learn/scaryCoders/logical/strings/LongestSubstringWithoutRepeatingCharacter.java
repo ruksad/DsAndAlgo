@@ -3,7 +3,23 @@ package com.learn.scaryCoders.logical.strings;
 import java.util.HashMap;
 import java.util.Map;
 
-// https://leetcode.com/problems/longest-substring-without-repeating-characters/
+/**
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/
+ * Input: s = "abcabcbb"
+ * Output: 3
+ * Explanation: The answer is "abc", with the length of 3.
+ *
+ * Input: s = "bbbbb"
+ * Output: 1
+ * Explanation: The answer is "b", with the length of 1.
+ *
+ *
+ * Input: s = "pwwkew"
+ * Output: 3
+ * Explanation: The answer is "wke", with the length of 3.
+ * Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ */
+
 
 public class LongestSubstringWithoutRepeatingCharacter {
 
@@ -30,23 +46,23 @@ public class LongestSubstringWithoutRepeatingCharacter {
 
         if(ss==null || ss.length()==0)
             return "";
-        int i=0;
+        int leftPtr=0;
         int max= Integer.MIN_VALUE;
         int start=0, end=0;
         HashMap<Character, Integer> hashMap = new HashMap<>();
 
-        for(int j=0;j<ss.length();j++){
+        for(int rightPtr=0;rightPtr<ss.length();rightPtr++){
 
-            if(hashMap.containsKey(ss.charAt(j))){
-                if(i< hashMap.get(ss.charAt(j))){
-                    i=hashMap.get(ss.charAt(j));
+            if(hashMap.containsKey(ss.charAt(rightPtr))){
+                if(leftPtr< hashMap.get(ss.charAt(rightPtr))){
+                    leftPtr=hashMap.get(ss.charAt(rightPtr));
                 }
             }
-            hashMap.put(ss.charAt(j),j);
-            if(j-i > max){
-                max= j-i;
-                start=i;
-                end=j;
+            hashMap.put(ss.charAt(rightPtr),rightPtr);
+            if(rightPtr-leftPtr > max){
+                max= rightPtr-leftPtr;
+                start=leftPtr;
+                end=rightPtr;
             }
         }
 

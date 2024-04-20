@@ -3,6 +3,7 @@ package com.learn.scaryCoders.logical.strings;
 import java.util.HashMap;
 
 /**
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
  * Given a string s, return the length of the longest substring that contains at most two distinct characters.
  * <p>
  * Input: s = "eceba"
@@ -15,6 +16,35 @@ import java.util.HashMap;
  */
 public class LongestSubStringTwoDistinctChars {
 
+
+
+
+
+    public String lengthOfLongestSubstring2(String s){
+        int[] freq = new int[256];
+        int cnt=0, leftPtr=0,start=0,end=0,max=-1;
+
+        for(int rightPtr=0;rightPtr<s.length();){
+
+            if(freq[s.charAt(rightPtr++)]++==0){
+                cnt++;
+            }
+
+            while(cnt>2){
+                if(freq[s.charAt(leftPtr++)]--==1)
+                    cnt--;
+            }
+
+            if(rightPtr-leftPtr>max){
+                max=rightPtr-leftPtr;
+                start=leftPtr;
+                end= rightPtr;
+            }
+
+        }
+
+        return s.substring(start,end);
+    }
 
     public String lengthOfLongestSubstringTwoDistinct1(String s) {
         int[] freq = new int[256];
@@ -42,9 +72,10 @@ public class LongestSubStringTwoDistinctChars {
 
     public static void main(String[] args) {
         LongestSubStringTwoDistinctChars lst = new LongestSubStringTwoDistinctChars();
-        //System.out.println(lst.lengthOfLongestSubstringTwoDistinct1("ccaabbb"));
+        System.out.println(lst.lengthOfLongestSubstring2("ccaabbb"));
+        System.out.println(lst.lengthOfLongestSubstring2("ccaaabbbbbbc"));
 
-        System.out.println(lst.longestSubstringWithTwoDistinctChars("ccaaabbbbbbc"));
+        //System.out.println(lst.longestSubstringWithTwoDistinctChars("ccaaabbbbbbc"));
     }
 
     private String longestSubstringWithTwoDistinctChars(String ss) {

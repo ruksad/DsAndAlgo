@@ -12,6 +12,38 @@
 # /
 # import sys
 
+def longest_substring_with_k_distinct_chars(string:str,char_nos:int) -> str:
+    freq_of_chars= [0] * 256
+    left_ptr=right_ptr=unique_char_count=start_string= end_string= 0
+    max_long_string=-1
+
+    while right_ptr < len(string):
+        char_freq= freq_of_chars[ord(string[right_ptr])]
+
+        if char_freq==0:
+            unique_char_count+=1
+
+        freq_of_chars[ord(string[right_ptr])]+=1
+
+        while unique_char_count >char_nos:
+            freq= freq_of_chars[ord(string[left_ptr])]
+
+            if freq==1:
+                unique_char_count-=1
+
+            freq_of_chars[ord(string[left_ptr])]-=1
+            left_ptr+=1
+
+        if right_ptr-left_ptr > max_long_string :
+            max_long_string=right_ptr-left_ptr
+            start_string=left_ptr
+            end_string=right_ptr
+
+        right_ptr+=1
+
+    return string[start_string : end_string+1]
+
+
 
 def longestSubstring(ss):
     freq = [0] * 256
@@ -48,4 +80,5 @@ def longestSubstring(ss):
 
 
 if __name__ == "__main__":
-    print(longestSubstring("ccaaabbbbbbc"))
+    print(longestSubstring("ccaaaebbbbbbeeec"))
+    print(longest_substring_with_k_distinct_chars("ccaaaebbbbbbeeec",3))

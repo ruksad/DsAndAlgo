@@ -230,7 +230,7 @@ public class BinarySearchTree {
                         }
                     }
                 }
-                // Option 3: Right child that has a left child
+                // Option 3: Right child that has a left child and can have right child
                 else {
                     Node leftmost = currentNode.right.left;
                     Node leftmostParent = currentNode.right;

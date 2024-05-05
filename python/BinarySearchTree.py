@@ -105,6 +105,75 @@ class BinarySearchTree:
 
         return root
 
+    def delete_non_recursive(self, key) -> bool:
+
+        if self.root is None:
+            return False
+
+        current_node = self.root
+        parent_node = None
+
+        while current_node is not None:
+
+            if key < current_node.data:
+                parent_node = current_node
+                current_node = current_node.left
+
+            elif key > current_node.data:
+                parent_node = current_node
+                current_node = current_node.right
+            else:
+
+                if current_node.right is None:
+
+                    if parent_node is None:
+                        self.root = current_node.left
+
+                    else:
+                        if current_node.data > parent_node.data:
+                            parent_node.right = current_node.left
+                        else:
+                            parent_node.left = current_node.left
+
+                    return True
+
+                elif current_node.right.left is None:
+                    current_node.right.left = current_node.left
+
+                    if parent_node is None:
+                        self.root = current_node.right
+                    else:
+                        if current_node.data > parent_node.data:
+                            parent_node.right = current_node.right
+                        else:
+                            parent_node.left = current_node.right
+
+                    return True
+
+                else:
+
+                    left_most = current_node.right.left
+                    left_most_parent = current_node.right
+
+                    while left_most.left is not None:
+                        left_most_parent = left_most
+                        left_most = left_most.left
+
+                    left_most_parent.left = left_most.right
+                    left_most.left = current_node.left
+                    left_most.right = current_node.right
+
+                    if parent_node is None:
+                        self.root = left_most
+                    else:
+                        if current_node.data > parent_node.data:
+                            parent_node.right = left_most
+                        else:
+                            parent_node.left = left_most
+                return True
+
+        return False
+
     def find_height(self, root):
         if root is None:
             return 0
@@ -117,10 +186,10 @@ class BinarySearchTree:
         else:
             return right_height
 
-    def count_number_of_nodes(self,root):
+    def count_number_of_nodes(self, root):
         if root is None:
             return 0
-        return self.count_number_of_nodes(root.left)+ self.count_number_of_nodes(root.right)+1
+        return self.count_number_of_nodes(root.left) + self.count_number_of_nodes(root.right) + 1
 
     def print_all_lead_node(self, root, list):
         if root is not None:
@@ -163,69 +232,94 @@ class BinarySearchTree:
     def isBST(self, node):
         if node is None:
             return True
-        
+
         if node.left is not None and find_max(node.left).data > node.data:
             return False
-        
+
         if node.right is not None and find_min(node.right).data < node.data:
             return False
-        
+
         if self.isBST(node.left) is False or self.isBST(node.right) is False:
             return False
-        
+
         return True
-
-
 
 
 if __name__ == "__main__":
     bst = BinarySearchTree()
+    # bst.add_node(50)
+    # bst.add_node(30)
+    # bst.add_node(20)
+    # bst.add_node(40)
+    # bst.add_node(70)
+    # bst.add_node(60)
+    # bst.add_node(80)
+
+    # elemets = []
+    # bst.inorder_traversal(bst.root, elemets)
+    # print("InOder traversal {}".format(elemets))
+    # print("maximum of bst {}".format(find_max(bst.root).data))
+    # print("Minimum of bst {}".format(find_min(bst.root).data))
+
+    # elements1 = []
+    # bst.print_all_nodes_at_level(bst.root, 3, elements1)
+    # print("all elements at given level {}".format(elements1))
+
+    # elements2 = []
+    # bst.print_all_nodes_level_wise(bst.root,elements2)
+    # print("all elements level wise {}".format(elements2))
+
+    # print("no of nodes in bst: {}".format(bst.count_number_of_nodes(bst.root)))
+
+    # bst.root.data=200
+    # print("Chekc if BST {}".format(bst.isBST(bst.root)))
+    # # bst.delete(bst.root, 50)
+    # # elemets1 = []
+    # # bst.inorder_traversal(bst.root, elemets1)
+    # # print("InOrder traversal {}".format(elemets1))
+
+    # bst1 = BinarySearchTree()
+    # bst1.add_node(1)
+    # bst1.add_node(2)
+    # bst1.add_node(3)
+    # bst1.add_node(4)
+    # bst1.add_node(5)
+    # bst1.add_node(6)
+    # bst1.add_node(7)
+    # print(bst.find_height(bst.root))
+    # list1 = []
+    # bst.print_all_lead_node(bst.root, list1)
+    # print("print all leaf nodes {}".format(list1))
+
+    # list2 = []
+    # bst1.print_all_non_leaf_node(bst1.root, list2)
+    # print("print all non leaf nodes {}".format(list2))
+
+    # print("Chekc if BST {}".format(bst1.isBST(bst1.root)))
+
     bst.add_node(50)
     bst.add_node(30)
     bst.add_node(20)
     bst.add_node(40)
     bst.add_node(70)
-    bst.add_node(60)
+    bst.add_node(75)
+    bst.add_node(74)
     bst.add_node(80)
+    bst.add_node(71)
+    bst.add_node(72)
+    bst.add_node(82)
+    bst.add_node(67)
+    bst.add_node(63)
+    bst.add_node(69)
+    bst.add_node(68)
+    bst.add_node(61)
+    bst.add_node(64)
 
-    elemets = []
-    bst.inorder_traversal(bst.root, elemets)
-    print("InOder traversal {}".format(elemets))
-    print("maximum of bst {}".format(find_max(bst.root).data))
-    print("Minimum of bst {}".format(find_min(bst.root).data))
+    list = []
+    bst.inorder_traversal(bst.root, list)
+    print("{} \n".format(list))
 
-    elements1 = []
-    bst.print_all_nodes_at_level(bst.root, 3, elements1)
-    print("all elements at given level {}".format(elements1))
-
-    elements2 = []
-    bst.print_all_nodes_level_wise(bst.root,elements2)
-    print("all elements level wise {}".format(elements2))
-
-    print("no of nodes in bst: {}".format(bst.count_number_of_nodes(bst.root)))
-
-    bst.root.data=200
-    print("Chekc if BST {}".format(bst.isBST(bst.root)))
-    # bst.delete(bst.root, 50)
-    # elemets1 = []
-    # bst.inorder_traversal(bst.root, elemets1)
-    # print("InOrder traversal {}".format(elemets1))
-
-    bst1 = BinarySearchTree()
-    bst1.add_node(1)
-    bst1.add_node(2)
-    bst1.add_node(3)
-    bst1.add_node(4)
-    bst1.add_node(5)
-    bst1.add_node(6)
-    bst1.add_node(7)
-    print(bst.find_height(bst.root))
-    list1 = []
-    bst.print_all_lead_node(bst.root, list1)
-    print("print all leaf nodes {}".format(list1))
-
-    list2 = []
-    bst1.print_all_non_leaf_node(bst1.root, list2)
-    print("print all non leaf nodes {}".format(list2))
-
-    print("Chekc if BST {}".format(bst1.isBST(bst1.root)))
+    bst.delete_non_recursive(70)
+    list = []
+    bst.inorder_traversal(bst.root, list)
+    print(list)

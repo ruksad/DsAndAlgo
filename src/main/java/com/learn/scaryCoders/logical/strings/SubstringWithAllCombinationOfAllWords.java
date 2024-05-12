@@ -95,7 +95,7 @@ public class SubstringWithAllCombinationOfAllWords {
         //System.out.println(findAllSubstringIndexes("foobar", new String[]{"foo", "bar"}));
 
         //System.out.println(findAllSubstringIndexes("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));
-        //System.out.println(findAllSubstringIndexes("barfoothefoobarman", new String[]{"foo","bar"}));
+        System.out.println(findAllSubstringIndexes("barfoothefoobarman", new String[]{"foo","bar"}));
         System.out.println(findAllSubstringIndexes("lingmindraboofooowingdingbarrwingmonkeypoundcake", new String[]{"fooo","barr","wing","ding","wing"}));
     }
 }
